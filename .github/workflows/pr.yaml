@@ -1,0 +1,33 @@
+name: Deploy PRs to the test environment
+
+on:
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened, edited]
+
+permissions: {}
+
+concurrency:
+  group: yolo
+  cancel-in-progress: true
+
+jobs:
+  do-things:
+    runs-on: ubuntu-latest
+    name: do-things
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - run: |
+          echo "Building PR ${{ github.event.pull_request.title }}"
+          if [[ -z $THESECRET ]]: then
+            echo "Do the deploy using the secret here..."
+          fi
+        env:
+          THESECRET: ${{ secrets.VERYSECRET }}
+      
+
+  
