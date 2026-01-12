@@ -20,6 +20,8 @@ jobs:
           persist-credentials: false
       - run: |
           gh issue create --title "A new issue" --body "Here are more details."
+        env:
+          GH_TOKEN: ${{ GITHUB_TOKEN }}
       
 
   
